@@ -21,9 +21,10 @@ fi
 ip="$(curl --silent "${if_config_url}")"                                                                   
 ip_json="$(curl --silent "${ip_api_url}${ip}")"                                                            
 lat="$(echo "${ip_json}" | jq '.lat')"                                                                     
-lon="$(echo "${ip_json}" | jq '.lon')"                                                                     
-echo "$ip $ip_json"                                                                                        
-echo "$lat $lon"                                                                                           
+lon="$(echo "${ip_json}" | jq '.lon')"
+
+[ -n "${ip_josn}" ] && exit 3
+                                                                                         
 solunar_json="$(curl --silent "${solunar_url}${lat},${lon},$(date '+%Y%m%d'),-4")"                         
 major1="$(echo "${solunar_json}" | jq '.major1Start, .major1Stop' | tr  -d '\n')"                          
 major1_dec="$(echo "${solunar_json}" | jq '.major1StartDec, .major1StopDec' | tr -d '\n')"                 
